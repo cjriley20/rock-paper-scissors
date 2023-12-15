@@ -10,24 +10,49 @@
 </body>
 
 <script>
+  const Choices = ["Rock", "Paper", "Scissors"];
+
   function getComputerChoice() {
-    let choice = Math.floor(Math.random() * 3);
+    const choice = Math.floor(Math.random() * 3);
+    return Choices[choice];
+  }
 
-    switch (choice) {
-      case 0:
-        return "Rock";
-      case 1:
-        return "Paper";
-      case 2:
-        return "Scissors";
-      default:
-        throw new RangeError(`Unknown choice: ${choice}`);
+  function toChoice(word) {
+    // Convert to canonical form: lower case with first letter capitalized.
+    const firstLetter = word.charAt(0);
+    const restOfWord = word.slice(1);
+
+    return firstLetter.toUpperCase() + restOfWord.toLowerCase();
+  }
+
+  function getPlayerChoice() {
+    let isChoiceOk = false;
+    let choice = "";
+
+    while (!isChoiceOk) {
+      let input = prompt("Choose Rock, Paper, or Scissors");
+      choice = toChoice(input);
+
+      isChoiceOk = Choices.includes(choice);
+
+      if (!isChoiceOk) {
+        alert("Wrong input - try again");
+      }
     }
+
+    return choice;
   }
 
-  for (let i = 0; i < 10; i++) {
-    console.log(getComputerChoice());
+  function playRound(playerChoice, computerChoice) {
+
   }
+
+  // Test
+  playerChoice = getPlayerChoice();
+  computerChoice = getComputerChoice();
+
+  console.log(`Player choice = ${playerChoice}`);
+  console.log(`Computer choice = ${computerChoice}`);
 </script>
 
 </html>
