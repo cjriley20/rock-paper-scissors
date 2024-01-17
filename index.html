@@ -10,11 +10,11 @@
 </body>
 
 <script>
-  const Choices = ["Rock", "Paper", "Scissors"];
+  const Options = ["Rock", "Paper", "Scissors"];
 
   function getComputerChoice() {
     const choice = Math.floor(Math.random() * 3);
-    return Choices[choice];
+    return Options[choice];
   }
 
   function toChoice(word) {
@@ -33,7 +33,7 @@
       let input = prompt("Choose Rock, Paper, or Scissors");
       choice = toChoice(input);
 
-      isChoiceOk = Choices.includes(choice);
+      isChoiceOk = Options.includes(choice);
 
       if (!isChoiceOk) {
         alert("Wrong input - try again");
@@ -44,15 +44,56 @@
   }
 
   function playRound(playerChoice, computerChoice) {
+    const playerIndex = Options.indexOf(playerChoice);
+    const computerIndex = Options.indexOf(computerChoice);
 
+    // Player wins if index is always one greater than opponent.
+    const losingIndex = (playerIndex + 2) % 3;
+
+    if (playerIndex == computerIndex) {
+      return "You Tie! Play again"
+    }
+    else if (computerIndex == losingIndex) {
+      return `You Win! ${playerChoice} beats ${computerChoice}`
+    }
+    else {
+      return `You Lose! ${computerChoice} beats ${playerChoice}`
+    }
   }
 
-  // Test
-  playerChoice = getPlayerChoice();
-  computerChoice = getComputerChoice();
+  function game() {
+    let playerScore = 0;
+    let computerScore = 0;
 
-  console.log(`Player choice = ${playerChoice}`);
-  console.log(`Computer choice = ${computerChoice}`);
+    const numberOfRounds = 5;
+
+    let round = 0;
+    while (round < numberOfRounds) {
+      playerChoice = getPlayerChoice();
+      computerChoice = getComputerChoice();
+
+      result = playRound(playerChoice, computerChoice);
+
+      console.log(result);
+
+      if (result.startsWith("You Tie")) {
+        continue;
+      }
+
+      if (result.startsWith("You Win")) {
+        playerScore++;
+      }
+      else {
+        computerScore++;
+      }
+
+      round++;
+    }
+
+    console.log(`Final Score: Player ${playerScore} to Computer ${computerScore}`);
+  }
+
+  game();
 </script>
 
 </html>
