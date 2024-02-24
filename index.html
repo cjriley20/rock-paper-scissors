@@ -12,6 +12,26 @@
 <script>
   const Options = ["Rock", "Paper", "Scissors"];
 
+  const resultDiv = document.createElement('div');
+
+  Options.forEach((option) => {
+    const button = document.createElement('button');
+    button.textContent = option;
+
+    button.addEventListener('click', (e) => {
+      const playerChoice = e.target.textContent;
+      const computerChoice = getComputerChoice();
+
+      const result = playRound(playerChoice, computerChoice);
+
+      resultDiv.textContent = result;
+    });
+
+    document.body.appendChild(button);
+  });
+
+  document.body.appendChild(resultDiv);
+
   function getComputerChoice() {
     const choice = Math.floor(Math.random() * 3);
     return Options[choice];
@@ -93,7 +113,7 @@
     console.log(`Final Score: Player ${playerScore} to Computer ${computerScore}`);
   }
 
-  game();
+  // game();
 </script>
 
 </html>
