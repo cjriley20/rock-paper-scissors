@@ -1,12 +1,15 @@
 const Options = ["Rock", "Paper", "Scissors"];
 
-const resultDiv = document.createElement('div');
+const buttonDiv = document.querySelector("div.buttons");
+const buttons = buttonDiv.children;
 
-Options.forEach((option) => {
-  const button = document.createElement('button');
-  button.textContent = option;
+const resultDiv = document.querySelector("div.result");
 
-  button.addEventListener('click', (e) => {
+// Initialize buttons.
+for (let i = 0; i < 3; i++) {
+  buttons[i].textContent = Options[i];
+
+  buttons[i].addEventListener('click', (e) => {
     const playerChoice = e.target.textContent;
     const computerChoice = getComputerChoice();
 
@@ -14,11 +17,7 @@ Options.forEach((option) => {
 
     resultDiv.textContent = result;
   });
-
-  document.body.appendChild(button);
-});
-
-document.body.appendChild(resultDiv);
+}
 
 function getComputerChoice() {
   const choice = Math.floor(Math.random() * 3);

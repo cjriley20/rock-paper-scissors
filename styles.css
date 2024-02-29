@@ -23,6 +23,18 @@ header h1 {
 }
 
 button {
-  width: 100px;
-  height: 40px;
+  background-color: #3882f6;
+  color: #f9faf8;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  font-size: 18px;
+}
+
+.result {
+  display: flex;
+  justify-content: space-around;
+  padding: 50px 100px;
+  border: 2px solid;
+  font-size: 18px;
 }
