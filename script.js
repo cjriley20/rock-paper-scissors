@@ -1,9 +1,20 @@
-const Options = ["Rock", "Paper", "Scissors"];
+const Options = ['Rock', 'Paper', 'Scissors'];
 
-const buttonDiv = document.querySelector("div.buttons");
+// Get screen elements.
+const buttonDiv = document.querySelector('div.buttons');
 const buttons = buttonDiv.children;
 
-const resultDiv = document.querySelector("div.result");
+const resultDiv = document.querySelector('div.result');
+
+const scoreDiv = document.querySelector('div.score');
+
+// Initialize game.
+let playerScore = 0;
+let computerScore = 0;
+
+const numberOfRounds = 5;
+
+let round = 0;
 
 // Initialize buttons.
 for (let i = 0; i < 3; i++) {
@@ -15,7 +26,8 @@ for (let i = 0; i < 3; i++) {
 
     const result = playRound(playerChoice, computerChoice);
 
-    resultDiv.textContent = result;
+    // Update screen with results.
+    updateGame(result);
   });
 }
 
@@ -34,16 +46,16 @@ function toChoice(word) {
 
 function getPlayerChoice() {
   let isChoiceOk = false;
-  let choice = "";
+  let choice = '';
 
   while (!isChoiceOk) {
-    let input = prompt("Choose Rock, Paper, or Scissors");
+    let input = prompt('Choose Rock, Paper, or Scissors');
     choice = toChoice(input);
 
     isChoiceOk = Options.includes(choice);
 
     if (!isChoiceOk) {
-      alert("Wrong input - try again");
+      alert('Wrong input - try again');
     }
   }
 
@@ -58,46 +70,43 @@ function playRound(playerChoice, computerChoice) {
   const losingIndex = (playerIndex + 2) % 3;
 
   if (playerIndex == computerIndex) {
-    return "You Tie! Play again"
+    return 'You Tie!  Play again'
   }
   else if (computerIndex == losingIndex) {
-    return `You Win! ${playerChoice} beats ${computerChoice}`
+    return `You Win!  ${playerChoice} beats ${computerChoice}`
   }
   else {
-    return `You Lose! ${computerChoice} beats ${playerChoice}`
+    return `You Lose!  ${computerChoice} beats ${playerChoice}`
   }
 }
 
-function game() {
-  let playerScore = 0;
-  let computerScore = 0;
+function updateGame(result) {
+  resultDiv.textContent = result;
 
-  const numberOfRounds = 5;
-
-  let round = 0;
-  while (round < numberOfRounds) {
-    playerChoice = getPlayerChoice();
-    computerChoice = getComputerChoice();
-
-    result = playRound(playerChoice, computerChoice);
-
-    console.log(result);
-
-    if (result.startsWith("You Tie")) {
-      continue;
+  if (result.startsWith('You Tie')) {
+    if (round == 0) {
+      scoreDiv.textContent = '';
     }
-
-    if (result.startsWith("You Win")) {
-      playerScore++;
-    }
-    else {
-      computerScore++;
-    }
-
-    round++;
+    return;
   }
 
-  console.log(`Final Score: Player ${playerScore} to Computer ${computerScore}`);
-}
+  if (result.startsWith('You Win')) {
+    playerScore++;
+  }
+  else {
+    computerScore++;
+  }
 
-// game();
+  round++;
+
+  if (round == numberOfRounds) {
+    // End game and reset.
+    scoreDiv.textContent = `FINAL SCORE: Player ${playerScore} to Computer ${computerScore}`;
+    playerScore = 0;
+    computerScore = 0;
+    round = 0;
+  }
+  else {
+    scoreDiv.textContent = `Score: Player ${playerScore} to Computer ${computerScore}`;
+  }
+}
